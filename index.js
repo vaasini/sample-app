@@ -1,4 +1,5 @@
 const express = require('express');
+const { errorHandler, notFound } = require('./middleware/errorHandler');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 
@@ -13,6 +14,9 @@ app.get('/health', (req, res) => {
 
 app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
