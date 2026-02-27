@@ -1,4 +1,5 @@
 const express = require('express');
+const { errorHandler, notFound } = require('./middleware/errorHandler');
 const { apiKeyAuth } = require('./middleware/auth');
 const { requestLogger } = require('./middleware/logger');
 const usersRouter = require('./routes/users');
@@ -16,6 +17,9 @@ app.get('/health', (req, res) => {
 
 app.use('/api/users', apiKeyAuth, usersRouter);
 app.use('/api/products', apiKeyAuth, productsRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
